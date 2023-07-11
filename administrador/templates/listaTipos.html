@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración</title>
+    {% load static %}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary fixed-top p-3 bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="btn btn-dark d-flex" href="{% url 'index' %}">Ir al inicio</a>
+            <a class="navbar-brand" href="#">Listado de tipos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Caimán Herramientas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Ir a página principal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'addProd' %}">Agregar Producto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'crud_tipos' %}">Ir a lista tipos de herramienta</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+<div class="text-center p-5 justify-content-center">
+    <h3 class="">Adminitración Caimán Herramientas</h3>
+    <br>
+    <br>
+
+    <form class="d-flex" role="search" method="get">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" name="buscar">
+        <button class="btn btn-outline-secondary buttonBus" type="submit">Buscar</button>
+    </form>
+    <br>
+    <table action="{% url 'crud_tipos' %}" method="GET" class="table table-dark table-striped" >
+        {% if tipos %}
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Opciones</th>
+                
+            </tr>
+        </thead>
+            {% for tmp in tipos %}
+                <tr>
+                    <td>{{tmp.id_tipo}}</td>
+                    <td>{{tmp.tipo}}</td>
+                    <td><a href="{% url 'tiposDel' pk=tmp.id_tipo %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="{% url 'tiposFind' pk=tmp.id_tipo %}" class="btn btn-info btn-sm">Modificar</a></td>
+                    
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+
+    <br><br><br>
+    <button type="button" class="btnRegister">
+        <a href="{% url 'tiposAdd' %}">Agregar</a>
+    </button>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    "title": "Felicitaciones",
+                    "text": "{{m}}",
+                    "icon":"success"
+                })
+            </script>
+        {% endfor %}
+        {% endif %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+</html>
